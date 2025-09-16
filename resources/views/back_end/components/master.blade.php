@@ -28,6 +28,8 @@
 
     <!-- Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <!-- Toastify messages -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
 <body>
@@ -70,6 +72,9 @@
     <!-- Dashboard JS -->
     <script src="{{ asset('back_end/assets/js/dashboard.js') }}"></script>
 
+    <!-- Toastify messages -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <!-- CSRF Token for Ajax -->
     <script>
         $.ajaxSetup({
@@ -84,6 +89,27 @@
                 allowClear: true
             });
         });
+
+        const Message = (message, status = 200) => {
+            console.log('Message called:', message, status); // debug
+
+            let bgColor;
+            if (status === 200) bgColor = "linear-gradient(to right, #00b09b, #96c93d)";
+            else if (status === 500) bgColor = "linear-gradient(to right, #e52d27, #b31217)";
+            else bgColor = "linear-gradient(to right, #00b09b, #96c93d)";
+
+            Toastify({
+                text: message || 'No message',
+                duration: 2000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                    background: bgColor
+                },
+            }).showToast();
+        };
     </script>
 
     @yield('scripts')

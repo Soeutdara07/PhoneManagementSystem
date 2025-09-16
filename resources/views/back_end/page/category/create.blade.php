@@ -10,7 +10,7 @@
 
                 <div class="form-group">
                    <label for="">Category Name</label>
-                   <input type="text" name="category_name" class="name form-control" id="">
+                   <input type="text" name="category_name" class="category_name form-control" id="">
                    <p></p>
                 </div>
 
@@ -27,7 +27,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" onclick="StoreCategory('.formCreateCategory')" class="btn btn-primary">Save</button>
+          <button type="button" onclick="StoreCategory('.formCreateCategory')" class="btn btn-primary ">Save</button>
         </div>
       </div>
     </div>

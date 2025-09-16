@@ -214,15 +214,15 @@
                     if (response.status === 200) {
                         $("#modalCreateCategory").modal("hide");
                         $(form).trigger("reset");
-                        $(".name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
+                        $(".category_name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
                             "")
 
                         CategoryList();
                         Message(response.message);
 
                     } else {
-                        $(".name").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            response.error.name);
+                        $(".category_name").addClass("is-invalid").siblings("p").addClass("text-danger").text(
+                            response.error.category_name);
                     }
                 }
             });
@@ -241,17 +241,17 @@
                     if (response.status == 200) {
                         $("#modalUpdateCategory").modal("hide");
                         $(form).trigger("reset");
-                        $(".name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
+                        $(".category_name_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
                             "")
                         CategoryList();
 
                     } else {
-                        $(".name").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            response.error.name);
+                        $(".category_name_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
+                            response.error.category_name);
                     }
                 }
             });
-        }
+        }   
 
         const CategoryDestory = (id) => {
             if (confirm("Do you want to delete this ?")) {

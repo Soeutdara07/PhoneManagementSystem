@@ -8,9 +8,9 @@
                 <form method="POST" class="formUpdateUpdate">
 
                     <div class="form-group">
-                        <input type="hidden" id="brand_id" name="brand_id">
+                        <input type="text" id="brand_id" name="brand_id">
                         <label for="">Brand Name</label>
-                        <input type="text" name="brand_name" class=" name_edit form-control">
+                        <input type="text" name="brand_name" class=" brand_name_edit form-control">
                         <p></p>
                     </div>
 

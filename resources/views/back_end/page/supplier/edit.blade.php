@@ -11,7 +11,7 @@
                 <div class="form-group">
                    <input type="hidden" id="supplier_id" name="supplier_id">
                    <label for="">Supplier Name</label>
-                   <input type="text" name="supplier_name" class="name_edit form-control">
+                   <input type="text" name="supplier_name" class="supplier_name_edit form-control">
                    <p></p>
                 </div>
                 <div class="form-group">

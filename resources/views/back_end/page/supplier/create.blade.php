@@ -10,7 +10,7 @@
 
                 <div class="form-group">
                    <label for="">Supplier Name</label>
-                   <input type="text" name="supplier_name" class="name form-control">
+                   <input type="text" name="supplier_name" class="supplier_name form-control">
                    <p></p>
                 </div>
                 <div class="form-group">

@@ -186,15 +186,15 @@
                     if (response.status === 200) {
                         $("#modalCreateSupplier").modal("hide");
                         $(form).trigger("reset");
-                        $(".name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
+                        $(".supplier_name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
                             "")
 
                         SupplierList();
                         Message(response.message);
 
                     } else {
-                        $(".name").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            response.error.name);
+                        $(".supplier_name").addClass("is-invalid").siblings("p").addClass("text-danger").text(
+                            response.error.supplier_name);
                     }
                 }
             });
@@ -210,7 +210,7 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status === 200) {
-                        $(".name_edit").val(response.supplier.name);
+                        $(".supplier_name_edit").val(response.supplier.supplier_name);
                         $("#supplier_id").val(response.supplier.id);
                         $(".type_edit").val(response.supplier.type);
                         $(".address_edit").val(response.supplier.address);
@@ -234,13 +234,18 @@
                     if (response.status === 200) {
                         $("#modalUpdateSupplier").modal("hide");
                         $(form).trigger("reset");
-                        $(".name_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger")
+                        $(".supplier_name_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger")
+                            .text("");
+                             $(".type_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger")
                             .text("");
                         SupplierList(); // ✅ Correct function to reload table
                         Message(response.message);
                     } else {
-                        $(".name_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            response.error.name);
+                        let error = response.error;
+                        $(".supplier_name_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
+                            error.supplier_name);
+                        $(".type_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
+                           error.type);
                     }
                 }
             });

@@ -136,6 +136,9 @@ class SupplierController extends Controller
 
         $validator = Validator::make($request->all(),[
             'supplier_name' => 'required|unique:suppliers,supplier_name,'.$request->supplier_id,
+            'type' => 'required',
+            'address' => 'required',
+            'contact_info' => 'required'
         ]);
 
         if($validator->passes()){

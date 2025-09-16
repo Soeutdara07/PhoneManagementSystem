@@ -186,15 +186,15 @@
                     if (response.status === 200) {
                         $("#modalCreateBrand").modal("hide");
                         $(form).trigger('reset');
-                        $(".name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
+                        $(".brand_name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
                             " ");
                         Brandlist();
                         Message(response.message);
 
                     } else {
                         let error = response.error;
-                        $(".name").addClass("is-invalid").siblings("p").addClass("text-danger").text(error
-                            .name);
+                        $(".brand_name").addClass("is-invalid").siblings("p").addClass("text-danger").text(error
+                            .brand_name);
                     }
                 }
             });
@@ -211,7 +211,7 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status === 200) {
-                        $(".name_edit").val(response.brands.brand_name);
+                        $(".brand_name_edit").val(response.brands.brand_name);
                         $(".status_edit").val(response.brands.status);
                         $("#brand_id").val(response.brands.id);
                     }
@@ -234,16 +234,18 @@
                     if (response.status === 200) {
                         $("#modalUpdateBrand").modal("hide");
                         $(form).trigger('reset');
-                        $(".name_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger")
+                        $(".brand_name_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger")
                             .text(
                                 " ");
                         Brandlist();
-
-                    } else {
+                        Message(response.message);
+                    }else if(response.status === 404){
+                         Message(response.message);
+                    }
+                    else {
                         let error = response.error;
-                        $(".name_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            error
-                            .name);
+                        $(".brand_name_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
+                            error.brand_name);
                     }
                 }
             });
