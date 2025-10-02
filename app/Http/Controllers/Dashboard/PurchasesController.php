@@ -47,8 +47,8 @@ class PurchasesController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->whereHas('user', fn($u) => $u->where('name', 'like', "%$search%"))
-                    ->orWhereHas('productDetail.product', fn($p) => $p->where('name', 'like', "%$search%"))
-                    ->orWhereHas('productDetail.supplier', fn($s) => $s->where('name', 'like', "%$search%"))
+                    ->orWhereHas('productDetail.product', fn($p) => $p->where('product_name', 'like', "%$search%"))
+                    ->orWhereHas('productDetail.supplier', fn($s) => $s->where('supplier_name', 'like', "%$search%"))
                     ->orWhere('purchase_note', 'like', "%$search%");
             });
         }

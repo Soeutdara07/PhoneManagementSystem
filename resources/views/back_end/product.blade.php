@@ -111,7 +111,7 @@
                             tr += `<tr>
                         <td>P${value.id}</td>
                         <td>${value.images.length > 0 ? `<img src="/uploads/product_image/${value.images[0]}" width="50" height="50">` : '-'}</td>
-                        <td>${value.product_name}</td>
+                        <td>${value.product_name ?? '-'}</td>
                         <td>${value.category ?? '-'}</td>
                         <td>${value.brand ?? '-'}</td>
                         <td>
@@ -660,7 +660,7 @@
 
             for (let i = 0; i < files.length; i++) {
                 let file = files[i];
-                let allowedTypes = ['image/jpeg', 'image/jpg', , 'image/png'];
+                let allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
                 let maxSize = 2 * 1024 * 1024; // 2MB
 
                 if (!allowedTypes.includes(file.type)) {

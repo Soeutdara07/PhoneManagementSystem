@@ -9,8 +9,8 @@
 
                     <div class="d-inline-block p-1 mb-3 rounded-circle"
                         style="background: linear-gradient(135deg, #0d6efd, #6610f2);">
-                        @if (Auth::user()->image != null)
-                            <img src="{{ asset('uploads/user/' . Auth::user()->image) }}" alt="Profile Image"
+                        @if (Auth::user()->profile_image != null)
+                            <img src="{{ asset('uploads/user/' . Auth::user()->profile_image) }}" alt="Profile Image"
                                 class="rounded-circle shadow border border-white border-2" width="180" height="180">
                         @else
                             <img src="https://placehold.co/150x150/e5e7eb/4b5563?text=JR" alt="Default Profile Image"
@@ -133,9 +133,9 @@
                                     <div class="position-relative d-inline-block">
                                         <div class="d-inline-block p-1 rounded-circle"
                                             style="background: linear-gradient(135deg, #0d6efd, #6610f2);">
-                                            @if (Auth::user()->image != null)
+                                            @if (Auth::user()->profile_image != null)
                                                 <img class="img-md rounded-circle"
-                                                    src="{{ asset('uploads/user/' . $user->image) }}" alt="Profile image"
+                                                    src="{{ asset('uploads/user/' . $user->profile_image) }}" alt="Profile image"
                                                     width="150" height="150">
                                             @else
                                                 <img src="https://placehold.co/150x150/e5e7eb/4b5563?text=JR"
@@ -180,12 +180,12 @@
                                         value="{{ Auth::user()->email != null ? Auth::user()->email : '' }}">
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="address">Address</label>
                                     <input type="text" class="form-control"
                                         value="{{ $address != null ? $address->address : '' }}" name="address"
                                         id="address">
-                                </div>
+                                </div> --}}
 
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Phone</label>

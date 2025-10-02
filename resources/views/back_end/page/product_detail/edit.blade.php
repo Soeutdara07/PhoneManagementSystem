@@ -69,7 +69,7 @@
                             <div class="form-group">
                                 <label>Product</label>
                                 <input type="hidden" name="id" class="product_detail_id" value="">
-                                <select name="product_id" class="product_edit form-control" id="edit_product_id"></select>
+                                <select name="product_id" class="product_edit form-control select2" id="edit_product_id"></select>
                                 <p></p>
                             </div>
                             <div class="form-group">
@@ -96,22 +96,22 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Supplier</label>
-                                <select name="supplier_id" class="supplier_edit form-control" id="edit_supplier_id"></select>
+                                <select name="supplier_id" class="supplier_edit form-control select2" id="edit_supplier_id"></select>
                                 <p></p>
                             </div>
                             <div class="form-group">
                                 <label>Color</label>
-                                <select name="color_id" id="edit_color_id" style="width: 100%" class="color_edit form-control"></select>
+                                <select name="color_id" id="edit_color_id" style="width: 100%" class="color_edit form-control select2"></select>
                                 <p></p>
                             </div>
                             <div class="form-group">
                                 <label>Condition</label>
-                                <input type="text" class="condition_edit form-control" name="condition" id="edit_condition">
+                                <input type="text" class="condition_edit form-control select2" name="condition" id="edit_condition">
                                 <p></p>
                             </div>
                             <div class="form-group">
                                 <label>Sold Status</label>
-                                <select name="sold_status" id="edit_status" class="status_edit form-control">
+                                <select name="sold_status" id="edit_status" class="status_edit form-control select2">
                                     <option value="1">available</option>
                                     <option value="2">sold</option>
                                     <option value="3">reserved</option>

@@ -28,9 +28,9 @@
             <div class="dropdown">
                 <a href="#" class="text-decoration-none dropdown-toggle d-flex align-items-center"
                     id="profile-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    @if (Auth::user()->image != null)
+                    @if (Auth::user()->profile_image != null)
                         <img class="img-xs rounded-circle border border-primary"
-                            src="{{ asset('uploads/user/' . Auth::user()->image) }}" alt="Profile image" width="40"
+                            src="{{ asset('uploads/user/' . Auth::user()->profile_image) }}" alt="Profile image" width="40"
                             height="40">
                     @else
                         <img class="rounded-circle me-md-2" src="https://placehold.co/40x40/e5e7eb/4b5563?text=JR"

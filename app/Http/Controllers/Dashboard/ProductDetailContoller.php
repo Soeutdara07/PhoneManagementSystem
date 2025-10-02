@@ -38,81 +38,55 @@ class ProductDetailContoller extends Controller
     }
 
     public function list(Request $request)
-    {
-        $limit  = 10;
-        $page   = $request->page ?? 1;
-        $offset = ($page - 1) * $limit;
+{
+    $limit = 10;
+    $page = $request->page ?? 1;
 
-        $query = ProductDetail::with([
-            'product:id,product_name',
-            'supplier:id,supplier_name',
-            'color:id,name',
-        ]);
+    $query = ProductDetail::with([
+        'product:id,product_name',
+        'product.images:id,product_id,image_url',
+        'supplier:id,supplier_name',
+        'color:id,name',
+    ]);
 
-        // Apply search filter
-        if (!empty($request->search)) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->whereHas('product', function ($p) use ($search) {
-                    $p->where('product_name', 'like', '%' . $search . '%');
-                })
-                    ->orWhereHas('supplier', function ($s) use ($search) {
-                        $s->where('supplier_name', 'like', '%' . $search . '%');
-                    })
-                    ->orWhereHas('color', function ($c) use ($search) {
-                        $c->where('name', 'like', '%' . $search . '%');
-                    })
-                    ->orWhere('product_identifier', 'like', '%' . $search . '%')
-                    ->orWhere('condition', 'like', '%' . $search . '%');
-            });
-        }
-
-        // Clone for total count
-        $totalRecord = $query->count();
-
-        // Get paginated data
-        // Get paginated data
-        $productDetails = ProductDetail::with([
-            'product:id,name',
-            'product.images',  // 👈 eager load product images
-            'supplier:id,name',
-            'color:id,name',
-        ])
-            ->orderBy('id', 'DESC')
-            ->limit($limit)
-            ->offset($offset)
-            ->get()
-            ->map(function ($detail) {
-                return [
-                    'id'                 => $detail->id,
-                    'product'            => $detail->product?->name,
-                    'supplier'           => $detail->supplier?->name,
-                    'color'              => $detail->color?->name,
-                    'cost'               => $detail->cost,
-                    'sale_price'         => $detail->sale_price,
-                    'product_identifier' => $detail->product_identifier,
-                    'sold_status'        => $detail->sold_status,
-                    'condition'          => $detail->condition,
-                    'description'        => $detail->product_description,
-                    'images'             => $detail->product?->images->pluck('product_image')->toArray(),
-                    'created_at'         => $detail->created_at,
-                ];
-            });
-
-
-
-        $totalPage = ceil($totalRecord / $limit);
-
-        return response()->json([
-            'status' => 200,
-            'page' => [
-                'totalRecord'  => $totalRecord,
-                'totalPage'    => $totalPage,
-                'currentPage'  => (int) $page,
-            ],
-            'product_details' => $productDetails,
-        ]);
+    if (!empty($request->search)) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->whereHas('product', fn($p) => $p->where('product_name', 'like', "%$search%"))
+              ->orWhereHas('supplier', fn($s) => $s->where('supplier_name', 'like', "%$search%"))
+              ->orWhereHas('color', fn($c) => $c->where('name', 'like', "%$search%"))
+              ->orWhere('product_identifier', 'like', "%$search%")
+              ->orWhere('condition', 'like', "%$search%");
+        });
     }
+
+    $paginated = $query->orderBy('id', 'DESC')->paginate($limit, ['*'], 'page', $page);
+
+    $productDetails = $paginated->getCollection()->map(fn($detail) => [
+        'id'                 => $detail->id,
+        'product'            => $detail->product?->product_name,
+        'supplier'           => $detail->supplier?->supplier_name,
+        'color'              => $detail->color?->name,
+        'cost'               => $detail->cost,
+        'sale_price'         => $detail->sale_price,
+        'product_identifier' => $detail->product_identifier,
+        'sold_status'        => $detail->sold_status,
+        'condition'          => $detail->condition,
+        'description'        => $detail->product_description,
+        'images'             => $detail->product?->images->pluck('image_url')->toArray(),
+        'created_at'         => $detail->created_at,
+    ]);
+
+    return response()->json([
+        'status' => 200,
+        'page' => [
+            'totalRecord' => $paginated->total(),
+            'totalPage'   => $paginated->lastPage(),
+            'currentPage' => $paginated->currentPage(),
+        ],
+        'product_details' => $productDetails,
+    ]);
+}
 
 
 

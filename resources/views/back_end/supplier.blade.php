@@ -13,28 +13,30 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5>Supplier</h5>
-                    <p data-bs-toggle="modal" data-bs-target="#modalCreateSupplier" class="card-description btn btn-info text-light">
+                    <p data-bs-toggle="modal" data-bs-target="#modalCreateSupplier"
+                        class="card-description btn btn-info text-light">
                         <i class="fa-solid fa-circle-plus" style="font-size:14px"></i>
-                        Add Supplier</p>
+                        Add Supplier
+                    </p>
                 </div>
                 <div class="table-responsive-lg">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Supplier Name</th>
-                                    <th>Type</th>
-                                    <th>Address</th>
-                                    <th>Contect</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="supplier_list">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Supplier Name</th>
+                                <th>Type</th>
+                                <th>Address</th>
+                                <th>Contect</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="supplier_list">
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
                 </div>
-                
+
                 {{-- page and buttion refresh --}}
 
                 <div class="d-flex justify-content-between align-items-center">
@@ -64,7 +66,7 @@
                     "_token": "{{ csrf_token() }}"
                 },
                 dataType: "json",
-                success: function(response) {    
+                success: function(response) {
                     if (response.status === 200) {
                         let suppliers = response.suppliers;
 
@@ -88,7 +90,7 @@
                         $(".supplier_list").html(tr);
 
 
-                         //pagination
+                        //pagination
                         let page = ``;
                         let totalPage = response.page.totalPage;
                         let currentPage = response.page.currentPage;
@@ -101,14 +103,14 @@
                                 </a>
                                 </li>`;
 
-                                for (let i = 1; i <= totalPage; i++) {
-                                    page += `
+                        for (let i = 1; i <= totalPage; i++) {
+                            page += `
                                         <li onclick="Page(${i})" class="page-item ${(i == currentPage) ? 'active' : '' }">
                                             <a class="page-link" href="javascript:void()">${i}</a>
                                         </li>`;
-                                }
+                        }
 
-                                page += `<li onclick="NextPage(${currentPage})" class="page-item ${( currentPage == totalPage ) ? 'd-none' : 'd-block'}">
+                        page += `<li onclick="NextPage(${currentPage})" class="page-item ${( currentPage == totalPage ) ? 'd-none' : 'd-block'}">
                                 <a class="page-link" href="javascript:void()" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -126,7 +128,7 @@
             });
         }
 
-      
+
         $(document).ready(function() {
             SupplierList();
         });
@@ -135,7 +137,7 @@
         const ButtonRefresh = () => {
             $("#searchBox").val("");
             $("#refresh-button-container").hide();
-           SupplierList();
+            SupplierList();
         }
 
 
@@ -171,7 +173,7 @@
             SupplierList(page - 1);
         }
 
-       
+
 
         const StoreSupplier = (form) => {
             let payloads = new FormData($(form)[0]);
@@ -186,15 +188,17 @@
                     if (response.status === 200) {
                         $("#modalCreateSupplier").modal("hide");
                         $(form).trigger("reset");
-                        $(".supplier_name").removeClass("is-invalid").siblings("p").removeClass("text-danger").text(
+                        $(".supplier_name").removeClass("is-invalid").siblings("p").removeClass(
+                            "text-danger").text(
                             "")
 
                         SupplierList();
                         Message(response.message);
 
                     } else {
-                        $(".supplier_name").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            response.error.supplier_name);
+                        $(".supplier_name").addClass("is-invalid").siblings("p").addClass("text-danger")
+                            .text(
+                                response.error.supplier_name);
                     }
                 }
             });
@@ -221,35 +225,53 @@
         }
 
         const UpdateSupplier = (form) => {
+            // Collects all input values from the form element
             let payloads = new FormData($(form)[0]);
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('supplier.update') }}",
-                data: payloads,
+                url: "{{ route('supplier.update') }}", // Laravel route
+                data: payloads, // send FormData
                 dataType: "json",
-                contentType: false,
-                processData: false,
+                contentType: false, // allow FormData boundary
+                processData: false, // prevent jQuery from encoding
                 success: function(response) {
                     if (response.status === 200) {
+                        // ✅ Success
                         $("#modalUpdateSupplier").modal("hide");
                         $(form).trigger("reset");
-                        $(".supplier_name_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger")
+                        $(".supplier_name_edit")
+                            .removeClass("is-invalid")
+                            .siblings("p")
+                            .removeClass("text-danger")
                             .text("");
-                             $(".type_edit").removeClass("is-invalid").siblings("p").removeClass("text-danger")
+                        $(".type_edit")
+                            .removeClass("is-invalid")
+                            .siblings("p")
+                            .removeClass("text-danger")
                             .text("");
-                        SupplierList(); // ✅ Correct function to reload table
-                        Message(response.message);
+                        SupplierList(); // reloads the table
+                        Message(response.message); // show success message
                     } else {
                         let error = response.error;
-                        $(".supplier_name_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            error.supplier_name);
-                        $(".type_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                           error.type);
+                        if (error.supplier_name) {
+                            $(".supplier_name_edit")
+                                .addClass("is-invalid")
+                                .siblings("p")
+                                .addClass("text-danger")
+                                .text(error.supplier_name);
+                        }
+                        if (error.type) {
+                            $(".type_edit")
+                                .addClass("is-invalid")
+                                .siblings("p")
+                                .addClass("text-danger")
+                                .text(error.type);
+                        }
                     }
                 }
             });
-        }
+        };
 
         const SupplierDestroy = (id) => {
             if (confirm("Do you want to delete this ?")) {

@@ -41,12 +41,13 @@
 
 body {
     background-color: var(--light-bg);
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Poppins', 'Noto Sans Khmer', -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--text-primary);
     margin: 0;
     padding: 0;
     overflow-x: hidden;
 }
+
 
 /* --- Sidebar Styling --- */
 .sidebar {
@@ -588,10 +589,10 @@ textarea {
     transition: all 0.3s ease;
 }
 
-.form-control::placeholder,
+/* .form-control::placeholder,
 .search-select-input::placeholder {
     color: transparent;
-}
+} */
 
 .form-control:focus,
 .search-select-input:focus,

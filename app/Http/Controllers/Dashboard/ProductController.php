@@ -251,7 +251,7 @@ class ProductController extends Controller
                 $ids = explode(',', $request->remove_image_ids);
                 $images = ProductImage::whereIn('id', $ids)->get();
                 foreach ($images as $img) {
-                    $path = public_path('uploads/product_image/' . $img->product_image);
+                    $path = public_path('uploads/product_image/' . $img->image_url);
                     if (file_exists($path)) unlink($path);
                     $img->delete();
                 }

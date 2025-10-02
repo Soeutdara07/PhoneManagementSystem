@@ -136,7 +136,7 @@ class SupplierController extends Controller
 
         $validator = Validator::make($request->all(),[
             'supplier_name' => 'required|unique:suppliers,supplier_name,'.$request->supplier_id,
-            'type' => 'required',
+            'type' => 'required|string|max:50',
             'address' => 'required',
             'contact_info' => 'required'
         ]);
@@ -184,8 +184,6 @@ class SupplierController extends Controller
         return response([
            'status' => 200,
            'message' => "Category deleted successful",
-        ]);
-
-       
+        ]);     
     }
 }

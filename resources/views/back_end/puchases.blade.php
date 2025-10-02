@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5>Purchase</h5>
+                    <h5>Purchase</h5>   
                     <p onclick="handleClickOnButtonNewPurchases()" data-bs-toggle="modal"
                         data-bs-target="#modalCreate_Puchases" class="card-description btn btn-info text-light "><i class="fa-solid fa-circle-plus" style="font-size:14px"></i>Add purchase</p>
                 </div>
@@ -194,7 +194,7 @@
                     let firstProduct = product_details[0];
 
                     // Set product name in the textbox
-                    $('#product_name').val(`${firstProduct.product.name} (${firstProduct.product_identifier})`);
+                    $('#product_name').val(`${firstProduct.product.product_name} (${firstProduct.product_identifier})`);
 
                     // Store the product_detail.id in the hidden input
                     $('#product_detail_id_hidden').val(firstProduct.id);

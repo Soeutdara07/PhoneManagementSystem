@@ -24,12 +24,11 @@ class ProfileController extends Controller
         ->pluck('contact_value', 'contact_name')
         ->toArray();
 
-    $userAddress = UserAddress::where('user_id', Auth::user()->id)->first();
+    
 
     return view('back_end.profile', [
         'user' => $user,
         'contacts' => $contacts,
-        'address' => $userAddress
     ]);
 }
 
@@ -86,7 +85,7 @@ class ProfileController extends Controller
                     File::copy($image_path,$user_path);
                     File::delete($image_path);
                 }
-                $user->image = $imageName;
+                $user->profile_image = $imageName;
             }
             $user->save();
 
@@ -109,19 +108,19 @@ class ProfileController extends Controller
             //-------------Conact update or create end----------------
 
             #--------------Adress update or create start----------------
-            $findAdress = UserAddress::where('user_id',Auth::user()->id)->first();
-            if($findAdress != null){
-                //update
-                $findAdress->address = $request->address;
-                $findAdress->save();
+            // $findAdress = UserAddress::where('user_id',Auth::user()->id)->first();
+            // if($findAdress != null){
+            //     //update
+            //     $findAdress->address = $request->address;
+            //     $findAdress->save();
 
-            }else{
-                //insert
-                $adress = new UserAddress();
-                $adress->user_id = Auth::user()->id;
-                $adress->address = $request->address;
-                $adress->save();
-            }
+            // }else{
+            //     //insert
+            //     $adress = new UserAddress();
+            //     $adress->user_id = Auth::user()->id;
+            //     $adress->address = $request->address;
+            //     $adress->save();
+            // }
             #-------------Adress update or create start----------------
             return redirect()->back()->with('success','Profile update successfully.');
         }else{

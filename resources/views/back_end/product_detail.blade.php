@@ -62,18 +62,28 @@
 @endsection
 @section('scripts')
     <script>
-        $(document).ready(function() {
-            // Initialize main category and brand selects on modal open
-            $('#modalCreateProduct_Detail').on('shown.bs.modal', function() {
-                $('#product_add, #supplier_add, #color_add').select2({
-                    width: '100%',
-                    placeholder: '---Select option---',
-                    allowClear: true,
-                    tags: true,
-                    dropdownParent: $('#modalCreateProduct_Detail')
-                });
+       $(document).ready(function() {
+
+    // function init select2 for specific modal
+    function initSelect2InModal(modalId) {
+        $(modalId).on('shown.bs.modal', function() {
+            $(this).find('.select2').select2({
+                width: '100%',
+                placeholder: 'Select option',
+                allowClear: true,
+                tags: true,
+                dropdownParent: $(modalId)
             });
         });
+    }
+
+    // call for create modal
+    initSelect2InModal('#modalCreateProduct');
+
+    // call for edit modal
+    initSelect2InModal('#modalUpdateProduct_Detail');
+});
+
 
         // Product Detail List
         const ProductDetailList = (page = 1, search = null) => {
@@ -149,14 +159,14 @@
                                         </a>
                                     </li>`;
 
-                                for (let i = 1; i <= totalPage; i++) {
-                                    pageHtml += `
+                        for (let i = 1; i <= totalPage; i++) {
+                            pageHtml += `
                                 <li onclick="ProductDetailPage(${i})" class="shadow-none page-item ${(i == currentPage) ? 'active' : ''}">
                                     <a class="page-link" href="javascript:void(0)">${i}</a>
                                 </li>`;
-                                }
+                        }
 
-                                pageHtml += `
+                        pageHtml += `
                                 <li onclick="NextPage(${currentPage})" class="page-item ${(currentPage == totalPage) ? 'd-none' : ''}">
                                     <a class="page-link" href="javascript:void(0)" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
@@ -300,24 +310,19 @@
 
 
                         $(".cost_add").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            error
-                            .cost);
+                            error.cost);
 
                         $(".sale_price_add").addClass("is-invalid").siblings("p").addClass("text-danger")
-                            .text(error
-                                .sale_price);
+                            .text(error.sale_price);
 
                         $(".product_indentifier_add").addClass("is-invalid").siblings("p").addClass(
-                            "text-danger").text(error
-                            .product_identifier);
+                            "text-danger").text(error.product_identifier);
 
                         $(".color_add").addClass("is-invalid").siblings("p").addClass("text-danger").text(
-                            error
-                            .color_id);
+                            error.color_id);
 
                         $(".condition_add").addClass("is-invalid").siblings("p").addClass("text-danger")
-                            .text(error
-                                .condition);
+                            .text(error.condition);
 
                     }
                 }
@@ -351,9 +356,11 @@
                         $("#edit_status").val(detail.sold_status);
 
                         // fill selects
-                        fillSelectOptions(products, detail.product_id, '#edit_product_id');
-                        fillSelectOptions(suppliers, detail.supplier_id, '#edit_supplier_id');
-                        fillSelectOptions(colors, detail.color_id, '#edit_color_id');
+                        fillSelectOptions(products, detail.product_id, '#edit_product_id', 'product_name');
+                        fillSelectOptions(suppliers, detail.supplier_id, '#edit_supplier_id',
+                            'supplier_name');
+                        fillSelectOptions(colors, detail.color_id, '#edit_color_id',
+                            'name'); // <--- key fix
 
                         // open modal
                         $("#modalUpdateProduct_Detail").modal('show');
@@ -367,11 +374,12 @@
             });
         };
 
-        // function select tata
-        const fillSelectOptions = (items, selectedId, selectId) => {
+        const fillSelectOptions = (items, selectedId, selectId, textField) => {
+            // textField: the property to display in the option (e.g., 'product_name', 'supplier_name', 'color_name')
             let options = '<option value=""></option>';
             items.forEach(v => {
-                options += `<option value="${v.id}" ${v.id == selectedId ? 'selected' : ''}>${v.name}</option>`;
+                const text = v[textField] || ''; // fallback to empty string
+                options += `<option value="${v.id}" ${v.id == selectedId ? 'selected' : ''}>${text}</option>`;
             });
             $(selectId).html(options).trigger('change');
         };
@@ -395,7 +403,34 @@
                         Message(response.message, response.status);
                     } else {
                         let error = response.errors;
-                        $(".product_edit").addClass("is-invalid").siblings("p").addClass("text-danger").text(error.product_id);
+                        if (error.cost) {
+                            $(".cost_edit")
+                                .addClass("is-invalid")
+                                .siblings("p")
+                                .addClass("text-danger")
+                                .text(error.cost);
+                        }
+                        if (error.sale_price) {
+                            $(".sale_price_edit")
+                                .addClass("is-invalid")
+                                .siblings("p")
+                                .addClass("text-danger")
+                                .text(error.sale_price);
+                        }
+                         if (error.condition) {
+                            $(".condition_edit")
+                                .addClass("is-invalid")
+                                .siblings("p")
+                                .addClass("text-danger")
+                                .text(error.condition);
+                        }
+                         if (error.product_identifier) {
+                            $(".product_indentifier_edit")
+                                .addClass("is-invalid")
+                                .siblings("p")
+                                .addClass("text-danger")
+                                .text(error.product_identifier);
+                        }
                     }
                 }
             });
