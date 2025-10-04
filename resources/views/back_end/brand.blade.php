@@ -26,7 +26,7 @@
                                 <th>Brand ID</th>
                                 <th>Name</th>
                                 <th>Status</th>
-                                <th>Actionss</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody class="brand_list">
