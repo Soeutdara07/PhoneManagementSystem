@@ -26,7 +26,7 @@
                                 <th>Brand ID</th>
                                 <th>Name</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Actionss</th>
                             </tr>
                         </thead>
                         <tbody class="brand_list">
@@ -75,7 +75,7 @@
                             <td>B${value.id}</td>
                             <td>${value.brand_name}</td>
                             <td>
-                                ${(value.status == 1) ? '<span class="text-success rounded-5 px-2 ">active</span>' 
+                                ${(value.status == 1) ? '<span class="text-success rounded-5 px-2 ">active</span>'
                                 : ' <span class="text-danger rounded-5  px-2">Inactive</span>' }
                             </td>
                             <td>
@@ -138,7 +138,7 @@
         }
 
 
-        //search event 
+        //search event
         $(document).on("click", '.searchBtn', function() {
             let searchValue = $("#searchBox").val();
             Brandlist(1, searchValue);
